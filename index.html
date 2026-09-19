@@ -5,148 +5,371 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
 
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+ 
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
 
     <style>
         :root {
-            --rail-blue: #2563eb;
-            --text-main: #111827;
+            --bg-canvas: #f8f7f4;
+            --card-bg: #ffffff;
+            --summary-bg: #f4f2ec;
+            --brand-primary: #4f46e5;
+            --brand-primary-hover: #4338ca;
+            --text-dark: #111827;
+            --text-muted: #6b7280;
             --border-color: #e5e7eb;
-            --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            color: #1f2937;
-            background-image: url(https://archive-images.prod.global.a201836.reutersmedia.net/2017/05/23/LYNXMPED4L148-OCATP.JPG);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .navbar {
-            padding: 1rem 2rem;
+            padding: 0.8rem 2rem;
             border-bottom: 1px solid var(--border-color);
-            background-color: white;
+            background-color: #ffffff;
         }
 
         .navbar-brand {
             display: flex;
             align-items: center;
             font-weight: 700;
-            color: var(--text-main);
+            color: var(--text-dark);
             text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        #logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-left: 10px;
+            object-fit: cover;
         }
 
         .nav-link {
-            color: #4b5563 !important;
+            color: var(--text-muted) !important;
             font-weight: 500;
             margin: 0 10px;
         }
 
         .nav-link.active-page {
-            color: var(--rail-blue) !important;
+            color: var(--brand-primary) !important;
             font-weight: 700;
         }
 
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 60px 0 30px 0;
-            margin-top: 40px;
+        .main-wrapper {
+            flex: 1;
+            padding: 40px 20px;
         }
 
-        #logo {
-            width: 40px;
-            height: 40px;
-            margin-left: 8px;
-         }
-
-        .item {
-          margin: 6px 0;
+        .breadcrumb-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
         }
+
+        .page-title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+        }
+
         
-        #Subtotal, #VAT, #Total_Amount {
-         font-weight: bold;
-         margin-top: 5px;
-        } 
+        .receipt-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .notice-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            transition: border-color 0.15s ease;
+        }
+
+        .item-row:hover {
+            border-color: var(--brand-primary);
+        }
+
+        .item-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--brand-primary);
+            cursor: pointer;
+        }
+
+        .item-label {
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
+        .item-price {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        
+        .summary-box {
+            background-color: var(--summary-bg);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .total-label {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .total-amount {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--brand-primary);
+        }
+
+        
+        .btn-calc {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            width: 100%;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-calc:hover {
+            background-color: var(--brand-primary-hover);
+        }
+
+        .btn-calc:active {
+            transform: scale(0.99);
+        }
+
+        
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0 24px 0;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
-    <center>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
-    <div class="container">
-        <div class="container">
-        <a class="navbar-brand fw-bold" href="">The Offical Jericho Notes Store
-            <img src="https://static.wikia.nocookie.net/villains/images/4/44/Aladeen.jpg/revision/latest?cb=20220502172624" id="logo">
-        </a>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
-        <div class="container">
-            <div class="collapse navbar-collapse justify-content-center show">
+
+    
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="#">
+                The Official Jericho Notes Store
+                <img src="https://static.wikia.nocookie.net/villains/images/4/44/Aladeen.jpg/revision/latest?cb=20220502172624" id="logo" alt="Logo">
+            </a>
+            <div class="collapse navbar-collapse justify-content-end show">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link active-page" href="index.html">Receipt Generator</a></li>
-                    <li class="nav-item"><a class="nav-link" href="sku-generator.html">SKU Generator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sku generator.html">SKU Generator</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     
-    <h3>NOTE TO BUYERS: Prices are determined based on the availability of the notes.</h3>
-
-    <h2>Subjects Available for Purchase:</h2>
-    <br>
-
-    <div class="item">
-        <input type="checkbox" id="math" value="150.00"> Math Notes - ₱150.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="ss" value="150.00"> SS Notes - ₱150.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="science" value="100.00"> Science Notes - ₱100.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="english" value="100.00"> English Notes - ₱100.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="filipino" value="150.00"> Filipino Notes - ₱150.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="ve" value="150.00"> VE Notes - ₱150.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="ict" value="100.00"> ICT Notes - ₱100.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="cat" value="50.00"> CAT Notes - ₱50.00
-    </div>
-    <div class="item">
-        <input type="checkbox" id="music" value="50.00"> Music Notes - ₱50.00
-    </div>
-
-    <br><br>
-
-    <button type="button" py-click="create_order">Calculate the price you pay for not taking your own notes</button>
-
-    <br><br>
-
-    <div id="Subtotal"></div>
-    <div id="VAT"></div>
-    <div id="Total_Amount"></div>
-
-    <br><br>
-
-    <footer class="container">
-        <div>
-            <div class="col-md-3">
-                <h6 class="fw-bold">Who we are</h6>
-                <p class="text-muted">WE are the 10 TOPAZ official distributors of Jerichos notes<br>Main distributors: Eran James S Diaz V and Louie Lee</p>
-            </div>
+    <div class="container main-wrapper">
+        <div class="text-center mb-4">
+            <div class="breadcrumb-tag">Tools / Receipt Generator</div>
+            <h1 class="page-title">Receipt Generator</h1>
         </div>
-        <hr>
-        <p class="text-center text-muted small">© 2026 Jerican Thought. All rights reserved.</p>
-    </footer>
 
+        
+        <div class="receipt-card">
+            <div class="section-header">Subjects Available for Purchase</div>
+            <div class="notice-text">NOTE TO BUYERS: Prices are determined based on the availability of the notes.</div>
+
+            
+            <div class="item-list">
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="math" value="150.00">
+                        <label for="math" class="item-label">Math Notes</label>
+                    </div>
+                    <span class="item-price">₱150.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="ss" value="150.00">
+                        <label for="ss" class="item-label">SS Notes</label>
+                    </div>
+                    <span class="item-price">₱150.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="science" value="100.00">
+                        <label for="science" class="item-label">Science Notes</label>
+                    </div>
+                    <span class="item-price">₱100.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="english" value="100.00">
+                        <label for="english" class="item-label">English Notes</label>
+                    </div>
+                    <span class="item-price">₱100.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="filipino" value="150.00">
+                        <label for="filipino" class="item-label">Filipino Notes</label>
+                    </div>
+                    <span class="item-price">₱150.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="ve" value="150.00">
+                        <label for="ve" class="item-label">VE Notes</label>
+                    </div>
+                    <span class="item-price">₱150.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="ict" value="100.00">
+                        <label for="ict" class="item-label">ICT Notes</label>
+                    </div>
+                    <span class="item-price">₱100.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="cat" value="50.00">
+                        <label for="cat" class="item-label">CAT Notes</label>
+                    </div>
+                    <span class="item-price">₱50.00</span>
+                </div>
+
+                <div class="item-row">
+                    <div>
+                        <input type="checkbox" id="music" value="50.00">
+                        <label for="music" class="item-label">Music Notes</label>
+                    </div>
+                    <span class="item-price">₱50.00</span>
+                </div>
+            </div>
+
+            
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="Subtotal">₱0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>VAT (12%)</span>
+                    <span id="VAT">₱0.00</span>
+                </div>
+                <div class="total-row">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount" id="Total_Amount">₱0.00</span>
+                </div>
+            </div>
+
+           
+            <button type="button" class="btn-calc" py-click="create_order">
+                Calculate the price you pay for not taking your own notes →
+            </button>
+        </div>
+    </div>
+
+    
+    <footer>
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-6">
+                    <h6 class="fw-bold mb-2">Who we are</h6>
+                    <p class="text-muted small mb-3">
+                        WE are the 10 TOPAZ official distributors of Jerichos notes<br>
+                        Main distributors: Eran James S Diaz V and Louie Lee
+                    </p>
+                </div>
+            </div>
+            <hr class="my-3">
+            <p class="text-center text-muted small mb-0">© 2026 Jerican Thought. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script type="py" src="main.py"></script>
 
