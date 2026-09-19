@@ -5,11 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
 
-
     <style>
+        :root {
+            --rail-blue: #2563eb;
+            --text-main: #111827;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            color: #1f2937;
+            background-image: url(https://archive-images.prod.global.a201836.reutersmedia.net/2017/05/23/LYNXMPED4L148-OCATP.JPG);
+        }
+
         .navbar {
             padding: 1rem 2rem;
             border-bottom: 1px solid var(--border-color);
@@ -41,53 +55,97 @@
             margin-top: 40px;
         }
 
+        #logo {
+            width: 40px;
+            height: 40px;
+            margin-left: 8px;
+         }
 
-
+        .item {
+          margin: 6px 0;
+        }
+        
+        #Subtotal, #VAT, #Total_Amount {
+         font-weight: bold;
+         margin-top: 5px;
+        } 
     </style>
-
 </head>
 <body>
+    <center>
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container">
-        <div class="collapse navbar-collapse justify-content-center">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link active-page" href="index.html">Reciept Generator</a></li>
-                <li class="nav-item"><a class="nav-link" href="sku generator.html">SKU Generator</a></li>
-            </ul>
+        <div class="container">
+        <a class="navbar-brand fw-bold" href="">The Offical Jericho Notes Store
+            <img src="https://static.wikia.nocookie.net/villains/images/4/44/Aladeen.jpg/revision/latest?cb=20220502172624" id="logo">
+        </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+        <div class="container">
+            <div class="collapse navbar-collapse justify-content-center show">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active-page" href="index.html">Receipt Generator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sku-generator.html">SKU Generator</a></li>
+                </ul>
+            </div>
         </div>
-        <a href="Registration.html" class="btn-register-top">Register</a>
-    </div>
     </nav>
+
     
+    <h3>NOTE TO BUYERS: Prices are determined based on the availability of the notes.</h3>
 
-<footer class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <h5 class="fw-bold">🚆 RailedRails</h5>
-            <p class="text-muted small">The BEST Railway Service in Metro Manila.</p>
-        </div>
-        <div class="col-md-3">
-            <h6 class="fw-bold">Quick Links</h6>
-            <ul class="list-unstyled small">
-                <li><a href="index.html" class="text-muted text-decoration-none">Reciept Generator</a></li>
-                <li><a href="sku generator.html" class="text-muted text-decoration-none">SKU Generator</a></li>
-            </ul>
-        </div>
-        
-<footer>
-        <div class="col-md-3">
-            <h6 class="fw-bold">Contact</h6>
-            <p class="text-muted small">Email: info@railedrails.com<br>Phone: 999 657 2370 </p>
-        </div>
-        <div class="col-md-3">
-            <h6 class="fw-bold">Who we are</h6>
-            <p class="text-muted small">WE are 9 TOPAZ<br>Major Shareholders: Eran James S Diaz, Jericho Magsalin, Loiue Lee</p>
-        </div>
+    <h2>Subjects Available for Purchase:</h2>
+    <br>
+
+    <div class="item">
+        <input type="checkbox" id="math" value="150.00"> Math Notes - ₱150.00
     </div>
-    <hr>
-    <p class="text-center text-muted small">© 2026 RailedRails. All rights reserved.</p>
-</footer>
+    <div class="item">
+        <input type="checkbox" id="ss" value="150.00"> SS Notes - ₱150.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="science" value="100.00"> Science Notes - ₱100.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="english" value="100.00"> English Notes - ₱100.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="filipino" value="150.00"> Filipino Notes - ₱150.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="ve" value="150.00"> VE Notes - ₱150.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="ict" value="100.00"> ICT Notes - ₱100.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="cat" value="50.00"> CAT Notes - ₱50.00
+    </div>
+    <div class="item">
+        <input type="checkbox" id="music" value="50.00"> Music Notes - ₱50.00
+    </div>
 
+    <br><br>
+
+    <button type="button" py-click="create_order">Calculate the price you pay for not taking your own notes</button>
+
+    <br><br>
+
+    <div id="Subtotal"></div>
+    <div id="VAT"></div>
+    <div id="Total_Amount"></div>
+
+    <br><br>
+
+    <footer class="container">
+        <div>
+            <div class="col-md-3">
+                <h6 class="fw-bold">Who we are</h6>
+                <p class="text-muted">WE are the 10 TOPAZ official distributors of Jerichos notes<br>Main distributors: Eran James S Diaz V and Louie Lee</p>
+            </div>
+        </div>
+        <hr>
+        <p class="text-center text-muted small">© 2026 Jerican Thought. All rights reserved.</p>
+    </footer>
 
 
     <script type="py" src="main.py"></script>
